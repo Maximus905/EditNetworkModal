@@ -1,0 +1,8 @@
+.modalBody {
+    max-height: calc(100vh * 0.5);
+    height: calc(100vh * 0.5);
+    overflow-y: auto;
+}
+:global(.modal-content) {
+}
+

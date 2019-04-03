@@ -67,7 +67,7 @@ Input2.propTypes = {
 }
 Input2.defaultProps = {
     disabled: false,
-    clearMargin: true
+    clearMargin: false
 }
 export default Input2
 
