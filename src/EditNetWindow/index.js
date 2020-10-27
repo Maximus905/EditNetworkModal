@@ -38,9 +38,10 @@ class EditNetWindow extends Component {
      * }} state
      */
     state = {
-        show: true,
+        show: false,
         newNet: false,
-        netId: 125921,
+        // netId: 125921,
+        netId: '',
         netIp: '',
         netComment: '',
         dataLoading: false,
@@ -84,10 +85,11 @@ class EditNetWindow extends Component {
     handleClose = () => {
         this.clearFormData()
     }
-    dataValidate = (devData) => {
+    dataValidate = () => {
         const errors = []
         const {netIp, vrfId} = this.state
         if (check.emptyString(netIp)) errors.push('Не указан адрес подсети')
+        if (check.emptyString(vrfId)) errors.push('Не выбран VRF')
         return errors
     }
     editedNetData = () => {
@@ -137,10 +139,11 @@ class EditNetWindow extends Component {
         }
     }
 
-    fetchNetData = async (netId, vrfId) => {
+    fetchNetData = async (netId) => {
         try {
+
             const res = await axios.get(NET_DATA_URL, {
-                params: {netId, vrfId}
+                params: {netId}
             })
             const {data} = res
             if (!data.netData) {
@@ -243,6 +246,8 @@ class EditNetWindow extends Component {
                 dataReady: false
             })
         }
+        window.updateNetTable = () => window.location.reload()
+
         this.setState({dataReady: false})
     }
 
@@ -268,9 +273,10 @@ class EditNetWindow extends Component {
         } else if (newNet && !dataReady && !dataLoading) {
             this.setState({dataLoading: true})
             const response1 = await this.fetchVrfList()
-            const {vrfList} = response1
-            this.vrfList = vrfList
-            this.setState({dataLoading: false, dataReady: true})
+            const {vrfList: vrfRawData} = response1
+            const vrfList = this.vrfList(vrfRawData)
+            console.log('NET VRF', vrfList)
+            this.setState({dataLoading: false, dataReady: true, vrfList})
         }
     }
 }

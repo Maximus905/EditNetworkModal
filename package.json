@@ -1,8 +1,8 @@
 {
-  "name": "modal",
+  "name": "edit_net_modal",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://netcmdb.rs.ru/react/editDevModal",
+  "homepage": "http://netcmdb.rs.ru/react/editNetModal",
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "3",
